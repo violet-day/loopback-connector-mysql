@@ -466,6 +466,31 @@ describe('mysql', function () {
     });
   });
 
+  it.only('should allow aggregate', function (done) {
+    var data = [
+      {title: 'a', content: 'AAA',star:1},
+      {title: 'a', content: 'ABC',star:1},
+      {title: 'b', content: 'BBB',star:2},
+      {title: 'c', content: 'CCC',star:3}
+    ];
+    Post.create(data, function (err, post) {
+      should.not.exist(err);
+      Post.aggregate({
+        groupBy:['title'],
+        projection:{
+          title:'title',
+          sum_star:{sum:'star'},
+          min_star:{sum:'star'},
+          avg_star:{sum:'star'}
+        }
+      }, function (err, result) {
+        console.log(result);
+        should.exist(err);
+        done();
+      });
+    });
+  });
+
   after(function (done) {
     Post.destroyAll(function () {
       PostWithStringId.destroyAll(function () {

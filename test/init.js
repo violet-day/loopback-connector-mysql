@@ -2,7 +2,7 @@ module.exports = require('should');
 
 var DataSource = require('loopback-datasource-juggler').DataSource;
 
-var config = require('rc')('loopback', {test: {mysql: {}}}).test.mysql;
+var config = require('rc')('loopback', {test: {mysql: {username:'root',password:'123456'}}}).test.mysql;
 
 global.getConfig = function (options) {
 
